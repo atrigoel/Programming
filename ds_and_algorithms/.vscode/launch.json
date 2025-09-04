@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Java Program",
+            "request": "launch",
+            "mainClass": ""
+        },
+        {
+            "name": "Node",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "runtimeExecutable": "node",
+            "console": "integratedTerminal"
+        }
+}
