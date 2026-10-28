@@ -1,0 +1,36 @@
+# Makefile.in -- template processed by ./configure into Makefile.
+# @VAR@ placeholders are filled in by Autoconf's AC_SUBST/AC_OUTPUT.
+
+CC      = @CC@
+CFLAGS  = @CFLAGS@ @DEFS@
+LIBS    = @LIBS@
+INSTALL = @INSTALL@
+
+# Standard GNU directory variables (all substituted by configure).
+prefix      = @prefix@
+exec_prefix = @exec_prefix@
+bindir      = @bindir@
+
+TARGET = hello
+OBJS   = src/main.o
+
+.PHONY: all clean install uninstall
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+
+# -I. so #include "config.h" (generated in the top dir) is found.
+src/main.o: src/main.c config.h
+	$(CC) $(CFLAGS) -I. -c src/main.c -o src/main.o
+
+install: $(TARGET)
+	$(INSTALL) -d $(DESTDIR)$(bindir)
+	$(INSTALL) -m 755 $(TARGET) $(DESTDIR)$(bindir)/$(TARGET)
+
+uninstall:
+	rm -f $(DESTDIR)$(bindir)/$(TARGET)
+
+clean:
+	rm -f $(TARGET) $(OBJS)

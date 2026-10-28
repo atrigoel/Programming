@@ -1,0 +1,17 @@
+# ST-Link/V2 and V2.1 debug probe rules.
+# Install:  sudo cp 99-stlink.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload && sudo udevadm trigger
+#
+# Find your probe's IDs with `lsusb` (STMicroelectronics entry).
+
+# ST-Link/V2 (bare probe): 0483:3748
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", \
+    MODE="0660", GROUP="plugdev", TAG+="uaccess", SYMLINK+="stlinkv2"
+
+# ST-Link/V2.1 (on Nucleo/Discovery): 0483:374b
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+    MODE="0660", GROUP="plugdev", TAG+="uaccess", SYMLINK+="stlink"
+
+# Virtual COM port exposed by ST-Link/V2.1 -> stable /dev/stlink-serial
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+    MODE="0660", GROUP="dialout", SYMLINK+="stlink-serial"

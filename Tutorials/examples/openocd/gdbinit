@@ -1,0 +1,29 @@
+# GDB startup script for OpenOCD debugging of a Cortex-M target.
+# Use:  arm-none-eabi-gdb -x gdbinit build/fw.elf
+# (Assumes OpenOCD is already running:  openocd -f openocd.cfg)
+
+# Connect to OpenOCD's GDB server.
+target extended-remote :3333
+
+# Nicer output.
+set print pretty on
+set pagination off
+
+# Reset the chip and hold the core stopped at the reset vector.
+monitor reset halt
+
+# Flash the ELF currently loaded in GDB.
+load
+
+# Start again from a clean reset so .data/.bss init runs under our control.
+monitor reset halt
+
+# Stop at main and go.
+break main
+continue
+
+# Handy aliases:
+#   (gdb) monitor reset halt     - reset + stop
+#   (gdb) load                   - reflash
+#   (gdb) info registers         - dump core regs
+#   (gdb) watch counter          - DWT hardware watchpoint

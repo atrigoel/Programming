@@ -1,0 +1,15 @@
+# FTDI USB-serial adapters: give each a stable name by its serial number so two
+# identical adapters never swap /dev/ttyUSB0 <-> /dev/ttyUSB1.
+#
+# Install:  sudo cp 60-ftdi-serial.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload && sudo udevadm trigger
+#
+# Discover the serial:  udevadm info -a -n /dev/ttyUSB0 | grep '{serial}'
+
+# Generic FTDI FT232 access (any FTDI adapter -> dialout group)
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", \
+    MODE="0660", GROUP="dialout"
+
+# Pin a specific adapter (edit the serial to match yours) to a fixed symlink.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", \
+    ATTRS{serial}=="A5069RR4", SYMLINK+="ftdi-boardA"

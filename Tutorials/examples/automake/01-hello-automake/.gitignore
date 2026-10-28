@@ -1,0 +1,22 @@
+# Autotools-generated files -- do not commit.
+Makefile
+Makefile.in
+/configure
+/aclocal.m4
+/config.h
+/config.h.in
+/config.h.in~
+/config.log
+/config.status
+/autom4te.cache/
+/build-aux/
+/m4/
+.deps/
+.dirstamp
+*.o
+*.a
+/build/
+/stage/
+src/hello
+tests/test_util
+*.tar.gz
